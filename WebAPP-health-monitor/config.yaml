@@ -1,0 +1,94 @@
+# 要监控的 Web 服务
+web_services:
+  - name: "超市管理系统"
+    url: "http://localhost:8080/webAPP"
+    timeout: 5
+    expected_status: 200
+
+# 要监控的端口
+ports:
+  - name: "Tomcat"
+    port: 8080
+  - name: "MySQL"
+    port: 3306
+
+# 要监控的进程
+processes:
+  - name: "Tomcat"
+    keyword: "tomcat"
+  - name: "MySQL"
+    keyword: "mysqld"
+
+# 系统资源阈值# ============================================================
+# 健康巡检系统配置文件
+# ============================================================
+
+# -------------------- Web 服务检查 --------------------
+web_services:
+  - name: "超市管理系统"
+    url: "http://localhost:8080/webAPP"  # 你的项目访问地址
+    timeout: 5                           # 超时时间（秒）
+    expected_status: 200                 # 期望的 HTTP 状态码
+
+# -------------------- 端口检查 --------------------
+ports:
+  - name: "Tomcat"
+    host: "localhost"
+    port: 8080
+  - name: "MySQL"
+    host: "localhost"
+    port: 3306
+
+# -------------------- 进程检查 --------------------
+
+processes:
+  - name: "Tomcat"
+    keyword: "tomcat"      # 进程名关键词，不区分大小写
+  - name: "MySQL"
+    keyword: "mysqld"      # MySQL 进程名
+
+# -------------------- 系统资源阈值 --------------------
+system_thresholds:
+  cpu_percent: 80          # CPU 使用率告警阈值（%）
+  memory_percent: 85       # 内存使用率告警阈值（%）
+  disk_percent: 90         # 磁盘使用率告警阈值（%）
+  disk_path: "/"           # 检查哪个磁盘（Linux 用 /，Windows 可以用 C:\\）
+
+# -------------------- 自动修复配置 --------------------
+auto_repair:
+  enabled: true            # 是否开启自动修复（测试阶段可以先关了）
+  max_retry: 3             # 最多重试几次（防雪崩）
+  retry_interval: 10       # 每次重试间隔（秒）
+
+  # 各服务的重启命令（Windows 和 Linux 不一样，按需修改）
+  restart_commands:
+    #Tomcat: "systemctl restart tomcat"    # Linux 示例
+    #MySQL: "systemctl restart mysqld"     # Linux 示例
+    # Windows 示例可以写成：
+     Tomcat: "net start Tomcat9"
+     MySQL: "net start MySQL80"
+
+# -------------------- 日志配置 --------------------
+log:
+  level: "INFO"            # 日志级别：DEBUG/INFO/WARNING/ERROR
+  keep_days: 30            # 日志保留天数
+
+# -------------------- 报告配置 --------------------
+report:
+  format: "markdown"       # 报告格式：markdown/txt
+  output_dir: "logs/reports"  # 报告输出目录
+system_thresholds:
+  cpu_percent: 80      # CPU 超过 80% 告警
+  memory_percent: 85   # 内存超过 85% 告警
+  disk_percent: 90     # 磁盘超过 90% 告警
+
+# 自动修复配置
+auto_repair:
+  enabled: true        # 是否开启自动修复
+  max_retry: 3         # 最多重试几次
+  retry_interval: 10   # 每次重试间隔（秒）
+
+# 日志配置
+log:
+  level: "INFO"
+  keep_days: 30
