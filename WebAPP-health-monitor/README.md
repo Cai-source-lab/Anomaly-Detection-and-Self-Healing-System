@@ -26,34 +26,39 @@
 
 ## 📁 项目结构
 Health-Monitor-System
+├── 📄 logger.py
+│   └── 日志模块
+│       ├─ 控制台 + 文件输出
+│       └─ 按天切割日志（TimedRotatingFileHandler）
 │
-├── logger.py                 # 日志模块
-│   └── 统一日志管理（控制台 + 文件 + 按天切割）
+├── 📄 health_checker.py
+│   └── 健康检查模块
+│       ├─ Web服务检测（HTTP状态 / 响应时间）
+│       ├─ 端口检测（Socket连通性）
+│       ├─ 进程检测（psutil扫描）
+│       └─ 系统资源监控（CPU / 内存 / 磁盘）
 │
-├── health_checker.py         # 健康检查模块
-│   ├── Web服务检测（HTTP状态 / 响应时间）
-│   ├── 端口检测（Socket连通性）
-│   ├── 进程检测（psutil进程扫描）
-│   └── 系统资源监控（CPU / 内存 / 磁盘）
+├── 📄 auto_repair.py
+│   └── 自动修复模块
+│       ├─ 异常服务识别
+│       ├─ 多次重试机制（防雪崩）
+│       └─ 服务自动重启（subprocess）
 │
-├── auto_repair.py           # 自动修复模块
-│   ├── 异常服务识别
-│   ├── 多次重试机制（防雪崩）
-│   └── 服务自动重启（subprocess）
+├── ⚙️ config.yaml
+│   └── 配置中心
+│       ├─ 监控对象配置
+│       ├─ 阈值配置（CPU/内存/磁盘）
+│       └─ 重启命令映射
 │
-├── config.yaml              # 配置中心
-│   ├── 监控服务列表
-│   ├── 阈值配置（CPU/内存/磁盘）
-│   └── 重启命令映射
+├── 🚀 monitor.py
+│   └── 主调度入口
+│       └─ 检查 → 日志 → 修复 → 报告
 │
-├── monitor.py               # 主调度入口（巡检流程编排）
-│   └── 串联 检查 → 日志 → 修复 → 报告
+├── 📂 logs/
+│   ├─ monitor.log
+│   └─ 轮转日志文件
 │
-├── logs/                    # 日志输出目录
-│   ├── monitor.log
-│   └── 轮转日志文件
-│
-└── reports/                 # 报告输出目录
+└── 📂 reports/
     └── health_report_xxx.md
 
     
