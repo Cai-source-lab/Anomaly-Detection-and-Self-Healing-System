@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: my_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: cy_test
+    ports:
+      - "3308:3306"
+    volumes:
+      - ./db.sql:/docker-entrypoint-initdb.d/db.sql
+  tomcat:
+    image: tomcat:9.0
+    container_name: my_tomcat
+    restart: always
+    ports:
+      - "8083:8080"
+    volumes:
+       - ./ROOT.war:/usr/local/tomcat/webapps/ROOT.war
+    depends_on:
+      - mysql
